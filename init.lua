@@ -13,34 +13,77 @@ grid.GRIDWIDTH = 13
 local mash = {"cmd", "alt", "ctrl"}
 local mashshift = {"cmd", "alt", "ctrl", "shift"}
 
+prefix = hs.hotkey.modal.new('cmd', 'j')
+function prefix:entered() hs.alert'Entered mode' end
+function prefix:exited() hs.alert'Exited mode' end
+prefix:bind('', 'escape', function() prefix:exit() end)
 
---
--- replace caffeine
---
-local caffeine = hs.menubar.new()
-function setCaffeineDisplay(state)
-    local result
-    if state then
-        result = caffeine:setIcon("caffeine-on.pdf")
-    else
-        result = caffeine:setIcon("caffeine-off.pdf")
-    end
+local function openiterm()
+  application.launchOrFocus("iTerm 2")
+  prefix:exit()
 end
 
-function caffeineClicked()
-    setCaffeineDisplay(hs.caffeinate.toggle("displayIdle"))
+local function openbrowser()
+  application.launchOrFocus("Firefox")
+  prefix:exit()
 end
 
-if caffeine then
-    caffeine:setClickCallback(caffeineClicked)
-    setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
+local function openmail()
+  application.launchOrFocus("CloudMagic Email")
+  prefix:exit()
 end
 
-hs.hotkey.bind(mash, "/", function() caffeineClicked() end)
+local function openchat()
+  application.launchOrFocus("Textual")
+  prefix:exit()
+end
+
+local function openmusic()
+  application.launchOrFocus("Spotify")
+  prefix:exit()
+end
+
+local function openvm()
+  application.launchOrFocus("VMware Fusion")
+  prefix:exit()
+end
+
+local function openpass()
+  application.launchOrFocus("1Password 6")
+  prefix:exit()
+end
+
+local function openedit()
+  application.launchOrFocus("Atom")
+  prefix:exit()
+end
+
+local function opensteam()
+  application.launchOrFocus("Steam")
+  prefix:exit()
+end
+
+local function opengog()
+  application.launchOrFocus("GalaxyClient")
+  prefix:exit()
+end
+
 --
--- /replace caffeine
+-- Open Applications
 --
 
+prefix:bind('', 'Z', 'Launching...', openmusic)
+prefix:bind('', 'X', 'Launching...', openiterm)
+prefix:bind('', 'C', 'Launching...', openchat)
+prefix:bind('', 'V', 'Launching...', openvm)
+prefix:bind('', 'B', 'Launching...', openbrowser)
+prefix:bind('', 'N', 'Launching...', openpass)
+prefix:bind('', 'M', 'Launching...', openmail)
+prefix:bind('', ',', 'Launching...', openedit)
+
+--
+-- /Open Applications
+--
 
 --
 -- toggle push window to edge and restore to screen
@@ -79,56 +122,26 @@ local function movewin(direction)
     win:setFrame(origWindowPos[id])
     -- and clear the origWindowPos value
     cleanupWindowPos(_,_,_,id)
+    prefix:exit()
   end
 end
 
-hs.hotkey.bind(mash, "A", function() movewin("left") end)
-hs.hotkey.bind(mash, "D", function() movewin("right") end)
-hs.hotkey.bind(mash, "S", function() movewin("down") end)
+prefix:bind('', 'A', '', function() movewin("left") end)
+prefix:bind('', 'D', '', function() movewin("right") end)
+prefix:bind('', 'S', '', function() movewin("down") end)
+
 --
 -- /toggle push window to edge and restore to screen
 --
 
 --
--- Open Applications
---
-local function openchrome()
-  application.launchOrFocus("Google Chrome")
-end
-
-local function openff()
-  application.launchOrFocus("FirefoxDeveloperEdition")
-end
-
-local function openmail()
-  application.launchOrFocus("Airmail Beta")
-end
-
-hotkey.bind(mash, 'F', openff)
-hotkey.bind(mash, 'C', openchrome)
-hotkey.bind(mash, 'M', openmail)
---
--- /Open Applications
---
-
-
---
 -- Window management
 --
---Alter gridsize
-hotkey.bind(mashshift, '=', function() grid.adjustHeight( 1) end)
-hotkey.bind(mashshift, '-', function() grid.adjustHeight(-1) end)
-hotkey.bind(mash, '=', function() grid.adjustWidth( 1) end)
-hotkey.bind(mash, '-', function() grid.adjustWidth(-1) end)
 
---Snap windows
-hotkey.bind(mash, ';', function() grid.snap(window.focusedWindow()) end)
-hotkey.bind(mash, "'", function() fnutils.map(window.visibleWindows(), grid.snap) end)
-
--- hotkey.bind(mashshift, 'H', function() window.focusedWindow():focusWindowWest() end)
--- hotkey.bind(mashshift, 'L', function() window.focusedWindow():focusWindowEast() end)
--- hotkey.bind(mashshift, 'K', function() window.focusedWindow():focusWindowNorth() end)
--- hotkey.bind(mashshift, 'J', function() window.focusedWindow():focusWindowSouth() end)
+prefix:bind('', 'H', function() window.focusedWindow():focusWindowWest() prefix:exit() end)
+prefix:bind('', 'L', function() window.focusedWindow():focusWindowEast() prefix:exit() end)
+prefix:bind('', 'K', function() window.focusedWindow():focusWindowNorth() prefix:exit() end)
+prefix:bind('', 'J', function() window.focusedWindow():focusWindowSouth() prefix:exit() end)
 
 --Move windows
 hotkey.bind(mash, 'DOWN', grid.pushWindowDown)
@@ -155,7 +168,6 @@ hotkey.bind(mash, 'P', grid.pushWindowPrevScreen)
 -- Monitor and reload config when required
 --
 function reload_config(files)
-  caffeine:delete()
   hs.reload()
 end
 hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reload_config):start()
