@@ -13,6 +13,11 @@ function prefix:entered()
   alerted = hs.alert.show("Command mode", true)
 end
 
+
+function prefix:exited()
+  hs.alert.closeSpecific(alerted)
+end
+
 function acNotify(exitCode, stdOut, stdErr, path)
   if exitCode == nil then
     hs.notify.show("Autocommit Success", path, "Your path has been commited to GitHub.")
@@ -21,8 +26,8 @@ function acNotify(exitCode, stdOut, stdErr, path)
   end
 end
 
-function prefix:exited()
-  hs.alert.closeSpecific(alerted)
+function autoCommit(src, dest)
+  hs.task.new("/usr/local/bin/autocommit", acNotify(exitCode, stdOut, stdErr, src), {home..src, home..dest}):start()
 end
 
 local function togglefloat()
@@ -130,6 +135,8 @@ prefix:bind('cmd', 'F', togglefloat)
 prefix:bind('cmd', 'M', togglezoom)
 prefix:bind('cmd', 'P', paste)
 
+-- hs.pathwatcher.new(home .. "/.zshrc", autoCommit("/.zshrc", "/git/zshrc/")):start()
+
 --
 -- Monitor and reload config when required
 --
@@ -137,7 +144,7 @@ function reload_config(files)
   hs.reload()
 end
 hs.pathwatcher.new(home .. "/.hammerspoon/", reload_config):start()
-hs.task.new("/usr/local/bin/autocommit", acNotify(exitCode, stdOut, stdErr, "~/.hammerspoon/"), {home.."/.hammerspoon/", home.."/git/hammerspoon-config/"}):start()
+autoCommit("/.hammerspoon/", "/git/hammerspoon-config/")
 hs.alert.show("Config loaded")
 --
 -- /Monitor and reload config when required
