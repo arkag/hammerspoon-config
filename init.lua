@@ -147,7 +147,7 @@ function reload_config(files)
   hs.reload()
 end
 hs.pathwatcher.new(home .. "/.hammerspoon/", reload_config):start()
-hs.task.new("/usr/local/bin/autocommit", acNotify(exitCode, stdOut, stdErr, "~/.hammerspoon/"), {home.."/.hammerspoon/", home.."/git/hammerspoon-config/"}):start()
+autoCommit("/.hammerspoon/", "/git/hammerspoon-config/")
 hs.alert.show("Config loaded")
 --
 -- /Monitor and reload config when required
