@@ -5,164 +5,121 @@ local hotkey = require "hs.hotkey"
 local mjomatic = require "hs.mjomatic"
 local window = require "hs.window"
 
-grid.MARGINX = 0
-grid.MARGINY = 0
-grid.GRIDHEIGHT = 13
-grid.GRIDWIDTH = 13
+prefix = hs.hotkey.modal.new('cmd', 'J')
+lastApp = nil
 
-local mash = {"cmd", "alt", "ctrl"}
-local mashshift = {"cmd", "alt", "ctrl", "shift"}
+function prefix:entered()
+  alerted = hs.alert.show("Command mode", true)
+end
 
-prefix = hs.hotkey.modal.new('cmd', 'j')
-function prefix:entered() hs.alert'Entered mode' end
-function prefix:exited() hs.alert'Exited mode' end
-prefix:bind('', 'escape', function() prefix:exit() end)
+function prefix:exited()
+  hs.alert.closeSpecific(alerted)
+end
 
-local function openiterm()
-  application.launchOrFocus("iTerm 2")
+local function togglefloat()
+  fn = hs.task.new("/usr/local/bin/kwmc", nil, {"window", "-t", "focused"})
+  fn:start()
   prefix:exit()
 end
 
-local function openbrowser()
-  application.launchOrFocus("Firefox")
+local function togglezoom()
+  fn = hs.task.new("/usr/local/bin/kwmc", nil, {"window", "-z", "fullscreen"})
+  fn:start()
   prefix:exit()
 end
 
-local function openmail()
-  application.launchOrFocus("CloudMagic Email")
+local function focusWin(direction)
+  fn = hs.task.new("/usr/local/bin/kwmc", nil, {"window", "-f", direction})
+  fn:start()
   prefix:exit()
 end
 
-local function openchat()
-  application.launchOrFocus("Textual")
+local function moveWin(direction)
+  fn = hs.task.new("/usr/local/bin/kwmc", nil, {"window", "-s", direction})
+  fn:start()
   prefix:exit()
 end
 
-local function openmusic()
-  application.launchOrFocus("Spotify")
-  prefix:exit()
-end
-
-local function openvm()
-  application.launchOrFocus("VMware Fusion")
-  prefix:exit()
-end
-
-local function openpass()
-  application.launchOrFocus("1Password 6")
-  prefix:exit()
-end
-
-local function openedit()
-  application.launchOrFocus("Atom")
-  prefix:exit()
-end
-
-local function opensteam()
-  application.launchOrFocus("Steam")
-  prefix:exit()
-end
-
-local function opengog()
-  application.launchOrFocus("GalaxyClient")
-  prefix:exit()
-end
-
---
--- Open Applications
---
-
-prefix:bind('', 'Z', 'Launching...', openmusic)
-prefix:bind('', 'X', 'Launching...', openiterm)
-prefix:bind('', 'C', 'Launching...', openchat)
-prefix:bind('', 'V', 'Launching...', openvm)
-prefix:bind('', 'B', 'Launching...', openbrowser)
-prefix:bind('', 'N', 'Launching...', openpass)
-prefix:bind('', 'M', 'Launching...', openmail)
-prefix:bind('', ',', 'Launching...', openedit)
-
---
--- /Open Applications
---
-
---
--- toggle push window to edge and restore to screen
---
-
--- somewhere to store the original position of moved windows
-local origWindowPos = {}
-
--- cleanup the original position when window restored or closed
-local function cleanupWindowPos(_,_,_,id)
-  origWindowPos[id] = nil
-end
-
--- function to move a window to edge or back
-local function movewin(direction)
-  local win = hs.window.focusedWindow()
-  local res = hs.screen.mainScreen():frame()
-  local id = win:id()
-
-  if not origWindowPos[id] then
-    -- move the window to edge if no original position is stored in
-    -- origWindowPos for this window id
-    local f = win:frame()
-    origWindowPos[id] = win:frame()
-
-    -- add a watcher so we can clean the origWindowPos if window is closed
-    local watcher = win:newWatcher(cleanupWindowPos, id)
-    watcher:start({hs.uielement.watcher.elementDestroyed})
-
-    if direction == "left" then f.x = (res.w - (res.w * 2)) + 10 end
-    if direction == "right" then f.x = (res.w + res.w) - 10 end
-    if direction == "down" then f.y = (res.h + res.h) - 10 end
-    win:setFrame(f)
+local function paste()
+  url = hs.pasteboard.readURL()
+  paste = hs.pasteboard.getContents()
+  if not url and not paste then
+    pp = hs.task.new("/usr/local/bin/pngpaste", nil, {"/Users/ishmael/.paste.png"})
+    pp:start()
+    fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c=@/Users/ishmael/.paste.png", "https://ptpb.pw/u"})
+    hs.alert.show("Image uploaded")
+  -- elseif url then
+  --   -- This isn't currently working due to how ptpb handles URLs and their redirection.
+  --   fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c=@-", "-w "..url, "https://ptpb.pw/?r=1"})
+  --   fn:setInput(url)
+  --   hs.alert.show("URL shortened")
   else
-    -- restore the window if there is a value for origWindowPos
-    win:setFrame(origWindowPos[id])
-    -- and clear the origWindowPos value
-    cleanupWindowPos(_,_,_,id)
+    fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c="..paste, "https://ptpb.pw/u"})
+    hs.alert.show("Text pasted")
+  end
+  fn:start()
+  prefix:exit()
+end
+
+local function launchFocusOrSwitchBack(bundleid)
+    -- This function will launch appName if it's not running, focus
+    -- it if it is running, or if it's already focused, switch back
+    -- to whatever the last focused App was
+    currentApp = hs.application.frontmostApplication()
+    if lastApp and currentApp and (currentApp:bundleID() == bundleid) then
+        lastApp:activate()
+    else
+        hs.application.launchOrFocusByBundleID(bundleid)
+    end
+    lastApp = currentApp
     prefix:exit()
+end
+
+local function keyStroke(mod, key, bundleid)
+  hs.eventtap.event.newKeyEvent(mod, key, true):post(hs.application.get(bundleid))
+  hs.eventtap.event.newKeyEvent(mod, key, false):post(hs.application.get(bundleid))
+end
+
+local function applicationWatcher(appName, eventType, appObject)
+  if (eventType == hs.application.watcher.activated) then
+    if (appName == "Finder") then
+      -- Bring all Finder windows forward when one gets activated
+      appObject:selectMenuItem({"Window", "Bring All to Front"})
+    end
   end
 end
 
-prefix:bind('', 'A', '', function() movewin("left") end)
-prefix:bind('', 'D', '', function() movewin("right") end)
-prefix:bind('', 'S', '', function() movewin("down") end)
+--prefix:bind('', 'Z', function() launchFocusOrSwitchBack("org.mozilla.nightly") hs.eventtap.keyStroke('cmd', '1') hs.eventtap.keyStroke('cmd', '1') end)
+prefix:bind('', 'Z', function() launchFocusOrSwitchBack("com.google.Chrome.canary") keyStroke('cmd', '1', "com.google.Chrome.canary") end)
+prefix:bind('', 'X', function() launchFocusOrSwitchBack("com.googlecode.iterm2") end)
+prefix:bind('', 'C', function() launchFocusOrSwitchBack("com.tdesktop.Telegram") end)
+prefix:bind('', 'V', function() launchFocusOrSwitchBack("com.vmware.fusion") end)
+--prefix:bind('', 'B', function() launchFocusOrSwitchBack("org.mozilla.nightly") end)
+prefix:bind('', 'B', function() launchFocusOrSwitchBack("com.google.Chrome.canary") end)
+prefix:bind('', 'N', function() launchFocusOrSwitchBack("com.github.atom") end)
+prefix:bind('', 'M', function() launchFocusOrSwitchBack("com.googlecode.iterm2") hs.eventtap.keyStroke('cmd', '1') end)
+prefix:bind('', ',', function() launchFocusOrSwitchBack("com.hnc.Discord") end)
+prefix:bind('', '.', function() launchFocusOrSwitchBack("com.tinyspeck.slackmacgap") end)
+prefix:bind('', 'F', function() launchFocusOrSwitchBack("com.apple.finder") end)
+prefix:bind('', 'P', function() launchFocusOrSwitchBack("com.apple.Preview") end)
+prefix:bind('', 'G', function() launchFocusOrSwitchBack("com.valvesoftware.steam") end)
+prefix:bind('cmd', 'G', function() launchFocusOrSwitchBack("com.gog.galaxy") end)
 
---
--- /toggle push window to edge and restore to screen
---
+prefix:bind('', 'H', function() focusWin('west') end)
+prefix:bind('', 'J', function() focusWin('north') end)
+prefix:bind('', 'K', function() focusWin('south') end)
+prefix:bind('', 'L', function() focusWin('east') end)
 
---
--- Window management
---
+prefix:bind('', 'left', function() moveWin('west') end)
+prefix:bind('', 'up', function() moveWin('north') end)
+prefix:bind('', 'down', function() moveWin('south') end)
+prefix:bind('', 'right', function() moveWin('east') end)
 
-prefix:bind('', 'H', function() window.focusedWindow():focusWindowWest() prefix:exit() end)
-prefix:bind('', 'L', function() window.focusedWindow():focusWindowEast() prefix:exit() end)
-prefix:bind('', 'K', function() window.focusedWindow():focusWindowNorth() prefix:exit() end)
-prefix:bind('', 'J', function() window.focusedWindow():focusWindowSouth() prefix:exit() end)
-
---Move windows
-hotkey.bind(mash, 'DOWN', grid.pushWindowDown)
-hotkey.bind(mash, 'UP', grid.pushWindowUp)
-hotkey.bind(mash, 'LEFT', grid.pushWindowLeft)
-hotkey.bind(mash, 'RIGHT', grid.pushWindowRight)
-
---resize windows
-hotkey.bind(mashshift, 'UP', grid.resizeWindowShorter)
-hotkey.bind(mashshift, 'DOWN', grid.resizeWindowTaller)
-hotkey.bind(mashshift, 'RIGHT', grid.resizeWindowWider)
-hotkey.bind(mashshift, 'LEFT', grid.resizeWindowThinner)
-
-hotkey.bind(mash, 'N', grid.pushWindowNextScreen)
-hotkey.bind(mash, 'P', grid.pushWindowPrevScreen)
-
--- hotkey.bind(mashshift, 'M', grid.maximizeWindow)
---
--- /Window management
---
-
+prefix:bind('', 'escape', function() prefix:exit() end)
+prefix:bind('cmd', 'L', function() hs.caffeinate.systemSleep() prefix:exit() end)
+prefix:bind('cmd', 'F', togglefloat)
+prefix:bind('cmd', 'M', togglezoom)
+prefix:bind('cmd', 'P', paste)
 
 --
 -- Monitor and reload config when required
