@@ -13,7 +13,6 @@ function prefix:entered()
   alerted = hs.alert.show("Command mode", true)
 end
 
-
 function prefix:exited()
   hs.alert.closeSpecific(alerted)
 end
