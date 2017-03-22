@@ -13,6 +13,14 @@ function prefix:entered()
   alerted = hs.alert.show("Command mode", true)
 end
 
+function acNotify(exitCode, stdOut, stdErr, path)
+  if exitCode == 0 then
+    hs.notify.show("Autocommit Success", path, "Your path has been commited to GitHub.")
+  else
+    hs.notify.show("Autocommit Fail", path, "Your path failed to commit.")
+  end
+end
+
 function prefix:exited()
   hs.alert.closeSpecific(alerted)
 end
@@ -126,12 +134,11 @@ prefix:bind('cmd', 'P', paste)
 -- Monitor and reload config when required
 --
 function reload_config(files)
-  autocommit = hs.task.new("/usr/local/bin/autocommit", function(exitCode, stdOut, stdErr) hs.alert.show("Autocommit: "..exitCode) end)
-  autocommit:start()
-
   hs.reload()
 end
 hs.pathwatcher.new(home .. "/.hammerspoon/", reload_config):start()
+autocommit = hs.task.new("/usr/local/bin/autocommit", acNotify(exitCode, stdOut, stdErr, "~/.hammerspoon"), {home..".hammerspoon", home.."git/hammerspoon-config"})
+autocommit:start()
 hs.alert.show("Config loaded")
 --
 -- /Monitor and reload config when required
