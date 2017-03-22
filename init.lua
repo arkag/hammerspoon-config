@@ -126,18 +126,8 @@ prefix:bind('cmd', 'P', paste)
 -- Monitor and reload config when required
 --
 function reload_config(files)
-  cp = hs.task.new("/usr/bin/cp", nil, {home .. "/.hammerspoon/init.lua", home .. "/git/hammerspoon-config/"})
-  add = hs.task.new("/usr/bin/git", nil, {"add", "init.lua"})
-  commit = hs.task.new("/usr/bin/git", nil, {"commit", "-m", "automated commit"})
-  push = hs.task.new("/usr/bin/git", nil, {"push"})
-
-  add:setWorkingDirectory(home .. "/git/hammerspoon-config/")
-  commit:setWorkingDirectory(home .. "/git/hammerspoon-config/")
-  push:setWorkingDirectory(home .. "/git/hammerspoon-config/")
-
-  add:start()
-  commit:start()
-  push:start()
+  autocommit = hs.task.new("/usr/local/bin/autocommit", function(exitCode, stdOut, stdErr) hs.alert.show("Autocommit: "..exitCode) end)
+  autocommit:start()
 
   hs.reload()
 end
