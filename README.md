@@ -45,5 +45,6 @@ I'm aware of issues with the init.lua:
 
 * URL Shortening isn't working due to the service I'm using isn't handling the shortening properly
 * `Cmd-J Z` doesn't actually switch to Chrome/Firefox and switch to the first tab, this is an issue I'm working on, it might be an issue with Hammerspoon
+* Auto commits aren't actually 100% certain. The notification method I'm using relies on `exitCode` from `hs.task` and for some reason it's not actually setting `exitCode`. It's always `nil`.
 * Anything you guys find.
 
