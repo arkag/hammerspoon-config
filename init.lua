@@ -135,11 +135,11 @@ prefix:bind('cmd', 'F', togglefloat)
 prefix:bind('cmd', 'M', togglezoom)
 prefix:bind('cmd', 'P', paste)
 
-function auto_commit(files)
+function azsh(files)
   autoCommit("/.zshrc", "/git/zshrc/")
 end
 
-hs.pathwatcher.new(home .. "/.zshrc", auto_commit):start()
+hs.pathwatcher.new(home .. "/.zshrc", azsh):start()
 
 --
 -- Monitor and reload config when required
