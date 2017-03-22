@@ -14,11 +14,7 @@ function prefix:entered()
 end
 
 function acNotify(exitCode, stdOut, stdErr, path)
-  if exitCode == 0 then
-    hs.notify.show("Autocommit Success", path, "Your path has been commited to GitHub: " .. exitCode.tostring())
-  else
-    hs.notify.show("Autocommit Fail", path, "Your path failed to commit.")
-  end
+    hs.notify.show("Autocommit Success", path, "Your path has been commited to GitHub: ")
 end
 
 function prefix:exited()
