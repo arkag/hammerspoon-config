@@ -4,6 +4,7 @@ local grid = require "hs.grid"
 local hotkey = require "hs.hotkey"
 local mjomatic = require "hs.mjomatic"
 local window = require "hs.window"
+local home = os.getenv("HOME")
 
 prefix = hs.hotkey.modal.new('cmd', 'J')
 lastApp = nil
@@ -44,17 +45,17 @@ local function paste()
   url = hs.pasteboard.readURL()
   paste = hs.pasteboard.getContents()
   if not url and not paste then
-    pp = hs.task.new("/usr/local/bin/pngpaste", nil, {"/Users/ishmael/.paste.png"})
+    pp = hs.task.new("/usr/local/bin/pngpaste", nil, {home .. "/.paste.png"})
     pp:start()
-    fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c=@/Users/ishmael/.paste.png", "https://ptpb.pw/u"})
+    fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c=@/Users/"..user.."/.paste.png", "https://ptpb.pw/"})
     hs.alert.show("Image uploaded")
-  -- elseif url then
-  --   -- This isn't currently working due to how ptpb handles URLs and their redirection.
-  --   fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c=@-", "-w "..url, "https://ptpb.pw/?r=1"})
-  --   fn:setInput(url)
-  --   hs.alert.show("URL shortened")
+  elseif url then
+    -- This isn't currently working due to how ptpb handles URLs and their redirection.
+    fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c=@-", "-w "..url, "https://ptpb.pw/u"})
+    fn:setInput(url)
+    hs.alert.show("URL shortened")
   else
-    fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c="..paste, "https://ptpb.pw/u"})
+    fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c="..paste, "https://ptpb.pw"})
     hs.alert.show("Text pasted")
   end
   fn:start()
@@ -125,9 +126,22 @@ prefix:bind('cmd', 'P', paste)
 -- Monitor and reload config when required
 --
 function reload_config(files)
+  cp = hs.task.new("/usr/bin/cp", nil, {home .. "/.hammerspoon/init.lua", home .. "/git/hammerspoon-config/"})
+  add = hs.task.new("/usr/bin/git", nil, {"add", "init.lua"})
+  commit = hs.task.new("/usr/bin/git", nil, {"commit", "-m", "automated commit"})
+  push = hs.task.new("/usr/bin/git", nil, {"push"})
+
+  add:setWorkingDirectory(home .. "/git/hammerspoon-config/")
+  commit:setWorkingDirectory(home .. "/git/hammerspoon-config/")
+  push:setWorkingDirectory(home .. "/git/hammerspoon-config/")
+
+  add:start()
+  commit:start()
+  push:start()
+
   hs.reload()
 end
-hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reload_config):start()
+hs.pathwatcher.new(home .. "/.hammerspoon/", reload_config):start()
 hs.alert.show("Config loaded")
 --
 -- /Monitor and reload config when required
