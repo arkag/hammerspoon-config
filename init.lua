@@ -100,7 +100,7 @@ local function applicationWatcher(appName, eventType, appObject)
       appObject:selectMenuItem({"Window", "Bring All to Front"})
     end
   elseif (eventType == hs.application.watcher.deactivated) then
-    if (appName == "qtPass") then
+    if (appName == "QtPass") then
       appObject:hide()
     end
     if (appName == "LastPass") then
@@ -124,7 +124,7 @@ prefix:bind('', 'F', function() launchFocusOrSwitchBack("com.apple.finder") end)
 prefix:bind('', 'P', function() launchFocusOrSwitchBack("com.apple.Preview") end)
 prefix:bind('', 'G', function() launchFocusOrSwitchBack("com.valvesoftware.steam") end)
 prefix:bind('cmd', 'G', function() launchFocusOrSwitchBack("com.gog.galaxy") end)
-prefix:bind('', 'D', function() hs.application.launchOrFocus("qtPass") prefix:exit() end)
+prefix:bind('', 'D', function() hs.application.launchOrFocus("QtPass") prefix:exit() end)
 --prefix:bind('', 'D', function() hs.application.launchOrFocusByBundleID("com.lastpass.LastPass") prefix:exit() end)
 
 prefix:bind('', 'H', function() focusWin('west') end)
