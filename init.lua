@@ -89,7 +89,7 @@ local function launchFocusOrSwitchBack(bundleid)
 end
 
 local function popUpApp(bundleid)
-  hs.application.get(bundleid):getWindow():centerOnScreen()
+  hs.application.get(bundleid):getWindow():focus()
 end
 
 local function keyStroke(mod, key, bundleid)
