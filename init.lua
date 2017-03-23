@@ -103,6 +103,9 @@ local function applicationWatcher(appName, eventType, appObject)
     if (appName == "KeePassXC") then
       appObject:hide()
     end
+    if (appName == "LastPass") then
+      appObject:hide()
+    end
   end
 end
 
@@ -121,7 +124,8 @@ prefix:bind('', 'F', function() launchFocusOrSwitchBack("com.apple.finder") end)
 prefix:bind('', 'P', function() launchFocusOrSwitchBack("com.apple.Preview") end)
 prefix:bind('', 'G', function() launchFocusOrSwitchBack("com.valvesoftware.steam") end)
 prefix:bind('cmd', 'G', function() launchFocusOrSwitchBack("com.gog.galaxy") end)
-prefix:bind('', 'D', function() hs.application.launchOrFocusByBundleID("org.keepassx.keepassxc") prefix:exit() end)
+--prefix:bind('', 'D', function() hs.application.launchOrFocusByBundleID("org.keepassx.keepassxc") prefix:exit() end)
+prefix:bind('', 'D', function() hs.application.launchOrFocusByBundleID("com.lastpass.LastPass") prefix:exit() end)
 
 prefix:bind('', 'H', function() focusWin('west') end)
 prefix:bind('', 'J', function() focusWin('north') end)
