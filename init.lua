@@ -141,7 +141,7 @@ prefix:bind('cmd', 'P', paste)
 -- Information Binds
 
 prefix:bind('cmd', 'B', function() hs.pasteboard.setContents(hs.application.frontmostApplication():bundleID()) hs.alert.show("BundleID Copied") prefix:exit() end)
-prefix:bind('cmd', 'D', function() hs.pasteboard.setContents(hs.window.frontmostWindow():role()) hs.alert.show("Window Title Copied") prefix:exit() end)
+prefix:bind('cmd', 'D', function() hs.pasteboard.setContents(hs.window.frontmostWindow():id()) hs.alert.show("Window ID Copied") prefix:exit() end)
 
 
 function azsh(files)
