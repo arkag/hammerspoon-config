@@ -7,7 +7,6 @@ local window = require "hs.window"
 local home = os.getenv("HOME")
 
 prefix = hs.hotkey.modal.new('cmd', 'J')
-watcher = hs.application.watcher.new(function(appName, eventType, appObject) applicationWatcher(appName, eventType, appObject) end)
 lastApp = nil
 
 function prefix:entered()
@@ -150,6 +149,7 @@ function azsh(files)
 end
 
 hs.pathwatcher.new(home .. "/.zshrc", azsh):start()
+hs.application.watcher.new(function(appName, eventType, appObject) applicationWatcher(appName, eventType, appObject) end):start()
 
 --
 -- Monitor and reload config when required
