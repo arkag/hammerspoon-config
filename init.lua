@@ -89,7 +89,6 @@ local function launchFocusOrSwitchBack(bundleid)
 end
 
 local function popUpApp(bundleid)
-  hs.window.get("KeePassXC")
   prefix:exit()
 end
 
@@ -122,7 +121,7 @@ prefix:bind('', 'F', function() launchFocusOrSwitchBack("com.apple.finder") end)
 prefix:bind('', 'P', function() launchFocusOrSwitchBack("com.apple.Preview") end)
 prefix:bind('', 'G', function() launchFocusOrSwitchBack("com.valvesoftware.steam") end)
 prefix:bind('cmd', 'G', function() launchFocusOrSwitchBack("com.gog.galaxy") end)
-prefix:bind('', 'D', function() popUpApp("org.keepassx.keepassxc") end)
+prefix:bind('', 'D', function() hs.window.get("KeePassXC") end)
 
 
 prefix:bind('', 'H', function() focusWin('west') end)
@@ -140,7 +139,7 @@ prefix:bind('cmd', 'L', function() hs.caffeinate.systemSleep() prefix:exit() end
 prefix:bind('cmd', 'F', togglefloat)
 prefix:bind('cmd', 'M', togglezoom)
 prefix:bind('cmd', 'P', paste)
-prefix:bind('cmd', 'B', function() hs.pasteboard.setContents(hs.application.frontmostApplication():bundleID()) hs.alert.show("BundleID Copied") end)
+prefix:bind('cmd', 'B', function() hs.pasteboard.setContents(hs.application.frontmostApplication():bundleID()) hs.alert.show("BundleID Copied") prefix:exit() end)
 
 function azsh(files)
   autoCommit("/.zshrc", "/git/zshrc/")
