@@ -88,10 +88,6 @@ local function launchFocusOrSwitchBack(bundleid)
     prefix:exit()
 end
 
-local function popUpApp(bundleid)
-  prefix:exit()
-end
-
 local function keyStroke(mod, key, bundleid)
   hs.eventtap.event.newKeyEvent(mod, key, true):post(hs.application.get(bundleid))
   hs.eventtap.event.newKeyEvent(mod, key, false):post(hs.application.get(bundleid))
@@ -121,8 +117,7 @@ prefix:bind('', 'F', function() launchFocusOrSwitchBack("com.apple.finder") end)
 prefix:bind('', 'P', function() launchFocusOrSwitchBack("com.apple.Preview") end)
 prefix:bind('', 'G', function() launchFocusOrSwitchBack("com.valvesoftware.steam") end)
 prefix:bind('cmd', 'G', function() launchFocusOrSwitchBack("com.gog.galaxy") end)
-prefix:bind('', 'D', function() hs.window.find("KeePassXC"):close() prefix:exit() end)
-
+prefix:bind('', 'D', function() hs.application.launchOrFocusByBundleID("org.keepassx.keepassxc") prefix:exit() end)
 
 prefix:bind('', 'H', function() focusWin('west') end)
 prefix:bind('', 'J', function() focusWin('north') end)
