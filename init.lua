@@ -99,6 +99,10 @@ local function applicationWatcher(appName, eventType, appObject)
       -- Bring all Finder windows forward when one gets activated
       appObject:selectMenuItem({"Window", "Bring All to Front"})
     end
+  elseif (eventType == hs.application.watcher.deactivated) then
+    if (appName == "KeePassXC") then
+      appObject:hide()
+    end
   end
 end
 
