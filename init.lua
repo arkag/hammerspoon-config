@@ -7,6 +7,7 @@ local window = require "hs.window"
 local home = os.getenv("HOME")
 
 prefix = hs.hotkey.modal.new('cmd', 'J')
+watcher = hs.application.watcher.new(function(appName, eventType, appObject) applicationWatcher(appName, eventType, appObject) end)
 lastApp = nil
 
 function prefix:entered()
