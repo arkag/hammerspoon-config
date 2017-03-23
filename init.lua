@@ -142,7 +142,7 @@ prefix:bind('cmd', 'L', function() hs.caffeinate.systemSleep() prefix:exit() end
 prefix:bind('cmd', 'F', togglefloat)
 prefix:bind('cmd', 'M', togglezoom)
 prefix:bind('cmd', 'P', paste)
-prefix:bind('cmd', 'K', function() hs.task.new("/usr/local/bin/brew", nil, {"services", "restart", "kwm"}):start() prefix:exit() end)
+prefix:bind('cmd', 'K', function() hs.task.new("/usr/local/bin/brew", nil, {"services", "restart", "kwm"}):start() hs.alert.show("KWM Restarted") prefix:exit() end)
 
 -- Information Binds
 
