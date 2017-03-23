@@ -121,7 +121,7 @@ prefix:bind('', 'F', function() launchFocusOrSwitchBack("com.apple.finder") end)
 prefix:bind('', 'P', function() launchFocusOrSwitchBack("com.apple.Preview") end)
 prefix:bind('', 'G', function() launchFocusOrSwitchBack("com.valvesoftware.steam") end)
 prefix:bind('cmd', 'G', function() launchFocusOrSwitchBack("com.gog.galaxy") end)
--- prefix:bind('cmd', 'P', function() popUpApp())
+prefix:bind('cmd', 'X', function() popUpApp("org.keepassx.keepassxc") end)
 
 
 prefix:bind('', 'H', function() focusWin('west') end)
