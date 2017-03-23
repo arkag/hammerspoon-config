@@ -89,7 +89,7 @@ local function launchFocusOrSwitchBack(bundleid)
 end
 
 local function popUpApp(bundleid)
-  hs.application.get(bundleid):getWindow():focus()
+  hs.window.get("KeePassXC")
   prefix:exit()
 end
 
