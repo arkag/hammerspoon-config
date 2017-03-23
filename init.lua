@@ -90,6 +90,7 @@ end
 
 local function popUpApp(bundleid)
   hs.application.get(bundleid):getWindow():focus()
+  prefix:exit()
 end
 
 local function keyStroke(mod, key, bundleid)
