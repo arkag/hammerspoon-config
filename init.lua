@@ -114,7 +114,7 @@ prefix:bind('', 'V', function() launchFocusOrSwitchBack("com.vmware.fusion") end
 --prefix:bind('', 'B', function() launchFocusOrSwitchBack("org.mozilla.nightly") end)
 prefix:bind('', 'B', function() launchFocusOrSwitchBack("com.google.Chrome.canary") end)
 prefix:bind('', 'N', function() launchFocusOrSwitchBack("com.github.atom") end)
-prefix:bind('', 'M', function() launchFocusOrSwitchBack("com.googlecode.iterm2") hs.eventtap.keyStroke('cmd', '1') end)
+prefix:bind('', 'M', function() launchFocusOrSwitchBack("com.googlecode.iterm2") keyStroke('cmd', '1', "com.googlecode.iterm2") end)
 prefix:bind('', ',', function() launchFocusOrSwitchBack("com.hnc.Discord") end)
 prefix:bind('', '.', function() launchFocusOrSwitchBack("com.tinyspeck.slackmacgap") end)
 prefix:bind('', 'F', function() launchFocusOrSwitchBack("com.apple.finder") end)
