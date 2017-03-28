@@ -106,12 +106,10 @@ local function applicationWatcher(appName, eventType, appObject)
   end
 end
 
---prefix:bind('', 'Z', function() launchFocusOrSwitchBack("org.mozilla.nightly") hs.eventtap.keyStroke('cmd', '1') hs.eventtap.keyStroke('cmd', '1') end)
 prefix:bind('', 'Z', function() launchFocusOrSwitchBack("com.google.Chrome.canary") keyStroke('cmd', '1', "com.google.Chrome.canary") end)
 prefix:bind('', 'X', function() launchFocusOrSwitchBack("com.googlecode.iterm2") end)
 prefix:bind('', 'C', function() launchFocusOrSwitchBack("com.tdesktop.Telegram") end)
 prefix:bind('', 'V', function() launchFocusOrSwitchBack("com.vmware.fusion") end)
---prefix:bind('', 'B', function() launchFocusOrSwitchBack("org.mozilla.nightly") end)
 prefix:bind('', 'B', function() launchFocusOrSwitchBack("com.google.Chrome.canary") end)
 prefix:bind('', 'N', function() launchFocusOrSwitchBack("com.github.atom") end)
 prefix:bind('', 'M', function() launchFocusOrSwitchBack("com.googlecode.iterm2") keyStroke('cmd', '1', "com.googlecode.iterm2") end)
