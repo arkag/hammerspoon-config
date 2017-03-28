@@ -62,7 +62,6 @@ local function paste()
     fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c=@/Users/"..user.."/.paste.png", "https://ptpb.pw/"})
     hs.alert.show("Image uploaded")
   elseif url then
-    -- This isn't currently working due to how ptpb handles URLs and their redirection.
     fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c=@-", "-w "..url, "https://ptpb.pw/u"})
     fn:setInput(url)
     hs.alert.show("URL shortened")
