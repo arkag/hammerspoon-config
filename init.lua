@@ -99,9 +99,6 @@ local function applicationWatcher(appName, eventType, appObject)
       appObject:selectMenuItem({"Window", "Bring All to Front"})
     end
   elseif (eventType == hs.application.watcher.deactivated) then
-    if (appName == "QtPass") then
-      appObject:hide()
-    end
     if (appName == "LastPass") then
       appObject:hide()
     end
