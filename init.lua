@@ -88,8 +88,10 @@ local function launchFocusOrSwitchBack(bundleid)
 end
 
 local function keyStroke(mod, key, bundleid)
-  hs.eventtap.event.newKeyEvent(mod, key, true):post(hs.application.find(bundleid))
-  hs.eventtap.event.newKeyEvent(mod, key, false):post(hs.application.find(bundleid))
+  app = hs.application.find(bundleid)
+  app.activate()
+  hs.eventtap.event.newKeyEvent(mod, key, true):post(app)
+  hs.eventtap.event.newKeyEvent(mod, key, false):post(app)
 end
 
 local function applicationWatcher(appName, eventType, appObject)
