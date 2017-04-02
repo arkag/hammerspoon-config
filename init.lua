@@ -59,14 +59,14 @@ local function paste()
   if not url and not paste then
     pp = hs.task.new("/usr/local/bin/pngpaste", nil, {home .. "/.paste.png"})
     pp:start()
-    fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c=@/Users/"..user.."/.paste.png", "https://ptpb.pw/"})
+    fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c=@/Users/"..user.."/.paste.png", "https://pb.gehidore.net/"})
     hs.alert.show("Image uploaded")
   elseif url then
-    fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c=@-", "-w "..url, "https://ptpb.pw/u"})
+    fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c=@-", "-w "..url, "https://pb.gehidore.net/"})
     fn:setInput(url)
     hs.alert.show("URL shortened")
   else
-    fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c="..paste, "https://ptpb.pw"})
+    fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c="..paste, "https://pb.gehidore.net/"})
     hs.alert.show("Text pasted")
   end
   fn:start()
@@ -106,7 +106,7 @@ local function applicationWatcher(appName, eventType, appObject)
   end
 end
 
--- I waffle between browsers frequently... 
+-- I waffle between browsers frequently...
 -- Firefox Nightly
 prefix:bind('', 'B', function() launchFocusOrSwitchBack("org.mozilla.nightly") end)
 prefix:bind('', 'Z', function() launchFocusOrSwitchBack("org.mozilla.nightly") keyStroke('cmd', '1', "org.mozilla.nightly") end)
