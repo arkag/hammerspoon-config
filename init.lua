@@ -54,16 +54,12 @@ local function moveWin(direction)
 end
 
 local function paste()
-  url = hs.pasteboard.readURL()
   paste = hs.pasteboard.getContents()
-  if not url and not paste then
+  if not paste then
     pp = hs.task.new("/usr/local/bin/pngpaste", nil, {home .. "/.paste.png"})
     pp:start()
     fn = hs.task.new("/usr/local/bin/fb", nil, {home.."/.paste.png"})
     hs.alert.show("Image uploaded")
-  elseif url then
-    fn = hs.task.new("/usr/local/bin/fb", nil, {url})
-    hs.alert.show("URL shortened")
   else
     fn = hs.task.new("/usr/local/bin/fb", nil, {paste})
     hs.alert.show("Text pasted")
