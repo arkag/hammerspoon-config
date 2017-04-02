@@ -62,11 +62,12 @@ local function paste()
     fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {home.."/.paste.png"})
     hs.alert.show("Image uploaded")
   elseif url then
-    fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {url})
+    fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end)
     fn:setInput(url)
     hs.alert.show("URL shortened")
   else
-    fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {paste})
+    fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end)
+    fn:setInput(paste)
     hs.alert.show("Text pasted")
   end
   fn:start()
