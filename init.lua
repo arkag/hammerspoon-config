@@ -59,13 +59,13 @@ local function paste()
   if not url and not paste then
     pp = hs.task.new("/usr/local/bin/pngpaste", nil, {home .. "/.paste.png"})
     pp:start()
-    fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("https://([^\n]+)")) end, {home.."/.paste.png"})
+    fn = hs.task.new("/usr/local/bin/fb", nil, {home.."/.paste.png"})
     hs.alert.show("Image uploaded")
   elseif url then
-    fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("https://([^\n]+)")) end, {url})
+    fn = hs.task.new("/usr/local/bin/fb", nil, {url})
     hs.alert.show("URL shortened")
   else
-    fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("https://([^\n]+)")) end, {paste})
+    fn = hs.task.new("/usr/local/bin/fb", nil, {paste})
     hs.alert.show("Text pasted")
   end
   fn:start()
