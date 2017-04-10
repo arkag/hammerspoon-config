@@ -68,6 +68,7 @@ local function paste()
     hs.alert.show("Text pasted")
   end
   fn:start()
+  prefix:exit()
 end
 
 local function launchFocusOrSwitchBack(bundleid)
