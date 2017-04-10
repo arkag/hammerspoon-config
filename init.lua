@@ -54,6 +54,7 @@ local function moveWin(direction)
 end
 
 local function paste()
+  paste = hs.pasteboard.getContents()
   if not url and not paste then
     pp = hs.task.new("/usr/local/bin/pngpaste", nil, {home .. "/.paste.png"})
     pp:start()
