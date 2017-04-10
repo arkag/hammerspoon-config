@@ -58,8 +58,7 @@ local function paste()
   if not url and not paste then
     pp = hs.task.new("/usr/local/bin/pngpaste", nil, {home .. "/.paste.png"})
     pp:start()
-    fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c=@"..home.."/.paste.png", "https://pb.gehidore.net/"})
-    hs.alert.show("Image uploaded")
+    fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c=@"..home.."/.paste.png", "https://pb.gehidore.net/"}) hs.alert.show("Image uploaded")
   elseif url then
     fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c=@-", "-w "..url, "https://pb.gehidore.net/"})
     fn:setInput(url)
@@ -68,6 +67,7 @@ local function paste()
     fn = hs.task.new("/usr/bin/curl", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {"-F", "c="..paste, "https://pb.gehidore.net/"})
     hs.alert.show("Text pasted")
   end
+  fn:start()
 end
 
 local function launchFocusOrSwitchBack(bundleid)
