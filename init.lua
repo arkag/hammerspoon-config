@@ -107,12 +107,11 @@ end
 -- I waffle between browsers frequently...
 -- Firefox Nightly
 prefix:bind('', 'B', function() launchFocusOrSwitchBack("org.mozilla.nightly") end)
-prefix:bind('', 'Z', function() launchFocusOrSwitchBack("org.mozilla.nightly") keyStroke('cmd', '1', "org.mozilla.nightly") end)
 
 -- Chrome Canary
 -- prefix:bind('', 'B', function() launchFocusOrSwitchBack("com.google.Chrome.canary") end)
--- prefix:bind('', 'Z', function() launchFocusOrSwitchBack("com.google.Chrome.canary") keyStroke('cmd', '1', "com.google.Chrome.canary") end)
 
+prefix:bind('', 'Z', function() launchFocusOrSwitchBack("google-play-music-desktop-player") end)
 prefix:bind('', 'X', function() launchFocusOrSwitchBack("com.googlecode.iterm2") end)
 prefix:bind('', 'C', function() launchFocusOrSwitchBack("com.tdesktop.Telegram") end)
 prefix:bind('', 'V', function() launchFocusOrSwitchBack("com.vmware.fusion") end)
