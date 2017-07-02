@@ -29,30 +29,6 @@ function autoCommit(src, dest)
   hs.task.new("/usr/local/bin/autocommit", acNotify(exitCode, stdOut, stdErr, src), {home..src, home..dest}):start()
 end
 
-local function togglefloat()
-  fn = hs.task.new("/usr/local/bin/kwmc", nil, {"window", "-t", "focused"})
-  fn:start()
-  prefix:exit()
-end
-
-local function togglezoom()
-  fn = hs.task.new("/usr/local/bin/kwmc", nil, {"window", "-z", "fullscreen"})
-  fn:start()
-  prefix:exit()
-end
-
-local function focusWin(direction)
-  fn = hs.task.new("/usr/local/bin/kwmc", nil, {"window", "-f", direction})
-  fn:start()
-  prefix:exit()
-end
-
-local function moveWin(direction)
-  fn = hs.task.new("/usr/local/bin/kwmc", nil, {"window", "-s", direction})
-  fn:start()
-  prefix:exit()
-end
-
 local function paste()
   paste = hs.pasteboard.getContents()
   if not url and not paste then
@@ -118,29 +94,15 @@ prefix:bind('', 'V', function() launchFocusOrSwitchBack("com.vmware.fusion") end
 prefix:bind('', 'N', function() launchFocusOrSwitchBack("com.github.atom") end)
 prefix:bind('', 'M', function() launchFocusOrSwitchBack("com.googlecode.iterm2") keyStroke('cmd', '1', "com.googlecode.iterm2") end)
 prefix:bind('', ',', function() launchFocusOrSwitchBack("com.hnc.Discord") end)
-prefix:bind('', '.', function() launchFocusOrSwitchBack("com.tinyspeck.slackmacgap") end)
 prefix:bind('', 'F', function() launchFocusOrSwitchBack("com.apple.finder") end)
 prefix:bind('', 'P', function() launchFocusOrSwitchBack("com.apple.Preview") end)
 prefix:bind('', 'G', function() launchFocusOrSwitchBack("com.valvesoftware.steam") end)
 prefix:bind('cmd', 'G', function() launchFocusOrSwitchBack("com.gog.galaxy") end)
 prefix:bind('', 'D', function() hs.application.launchOrFocusByBundleID("com.lastpass.LastPass") prefix:exit() end)
 
-prefix:bind('', 'H', function() focusWin('west') end)
-prefix:bind('', 'J', function() focusWin('north') end)
-prefix:bind('', 'K', function() focusWin('south') end)
-prefix:bind('', 'L', function() focusWin('east') end)
-
-prefix:bind('', 'left', function() moveWin('west') end)
-prefix:bind('', 'up', function() moveWin('north') end)
-prefix:bind('', 'down', function() moveWin('south') end)
-prefix:bind('', 'right', function() moveWin('east') end)
-
 prefix:bind('', 'escape', function() prefix:exit() end)
 prefix:bind('cmd', 'L', function() hs.caffeinate.systemSleep() prefix:exit() end)
-prefix:bind('cmd', 'F', togglefloat)
-prefix:bind('cmd', 'M', togglezoom)
 prefix:bind('cmd', 'P', paste)
-prefix:bind('cmd', 'K', function() hs.task.new("/usr/local/bin/brew", nil, {"services", "restart", "kwm"}):start() hs.alert.show("KWM Restarted") prefix:exit() end)
 prefix:bind('cmd', 'C', function() hs.pasteboard.clearContents() hs.alert.show("Clipboard Cleared") prefix:exit() end)
 
 -- Information Binds
