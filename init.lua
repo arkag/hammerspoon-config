@@ -148,13 +148,6 @@ prefix:bind('cmd', 'C', function() hs.pasteboard.clearContents() hs.alert.show("
 prefix:bind('cmd', 'B', function() hs.pasteboard.setContents(hs.application.frontmostApplication():bundleID()) hs.alert.show("BundleID Copied") prefix:exit() end)
 prefix:bind('cmd', 'D', function() hs.pasteboard.setContents(hs.application.frontmostApplication():title()) hs.alert.show("Title Copied") prefix:exit() end)
 
-function azsh(files)
-  autoCommit("/.zshrc", "/git/zshrc/")
-end
-
-hs.pathwatcher.new(home .. "/.zshrc", azsh):start()
-hs.application.watcher.new(function(appName, eventType, appObject) applicationWatcher(appName, eventType, appObject) end):start()
-
 --
 -- Monitor and reload config when required
 --
