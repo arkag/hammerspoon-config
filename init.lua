@@ -19,7 +19,7 @@ end
 
 function acNotify(exitCode, stdOut, stdErr, path)
   if exitCode == nil then
-    hs.notify.show("Autocommit Success", path, "Your path has been commited to BitBucket.")
+    hs.notify.show("Autocommit Success", path, "Your path has been commited to GitHub.")
   else
     hs.notify.show("Autocommit Fail", path, "Your path failed to commit.")
   end
