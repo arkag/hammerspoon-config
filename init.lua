@@ -80,25 +80,15 @@ local function applicationWatcher(appName, eventType, appObject)
   end
 end
 
--- I waffle between browsers frequently...
--- Firefox Nightly
 prefix:bind('', 'B', function() launchFocusOrSwitchBack("org.mozilla.nightly") end)
-
--- Chrome Canary
--- prefix:bind('', 'B', function() launchFocusOrSwitchBack("com.google.Chrome.canary") end)
-
 prefix:bind('', 'Z', function() launchFocusOrSwitchBack("google-play-music-desktop-player") end)
 prefix:bind('', 'X', function() launchFocusOrSwitchBack("com.googlecode.iterm2") end)
 prefix:bind('', 'C', function() launchFocusOrSwitchBack("com.tdesktop.Telegram") end)
-prefix:bind('', 'V', function() launchFocusOrSwitchBack("com.vmware.fusion") end)
 prefix:bind('', 'N', function() launchFocusOrSwitchBack("com.github.atom") end)
 prefix:bind('', 'M', function() launchFocusOrSwitchBack("com.googlecode.iterm2") keyStroke('cmd', '1', "com.googlecode.iterm2") end)
 prefix:bind('', ',', function() launchFocusOrSwitchBack("com.hnc.Discord") end)
 prefix:bind('', 'F', function() launchFocusOrSwitchBack("com.apple.finder") end)
 prefix:bind('', 'P', function() launchFocusOrSwitchBack("com.apple.Preview") end)
-prefix:bind('', 'G', function() launchFocusOrSwitchBack("com.valvesoftware.steam") end)
-prefix:bind('cmd', 'G', function() launchFocusOrSwitchBack("com.gog.galaxy") end)
-prefix:bind('', 'D', function() hs.application.launchOrFocusByBundleID("com.lastpass.LastPass") prefix:exit() end)
 
 prefix:bind('', 'escape', function() prefix:exit() end)
 prefix:bind('cmd', 'L', function() hs.caffeinate.systemSleep() prefix:exit() end)
