@@ -29,24 +29,24 @@ function autoCommit(src, dest)
   hs.task.new("/usr/local/bin/autocommit", acNotify(exitCode, stdOut, stdErr, src), {home..src, home..dest}):start()
 end
 
-local function paste()
-  paste = hs.pasteboard.getContents()
-  if not url and not paste then
-    pp = hs.task.new("/usr/local/bin/pngpaste", nil, {home .. "/.paste.png"})
-    pp:start()
-    fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {home.."/.paste.png"})
-    hs.alert.show("Image uploaded")
-  elseif url then
-    fn = hs.task.new("echo "..url, function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {"|", "/usr/local/bin/fb"})
-    fn:setInput(url)
-    hs.alert.show("URL shortened")
-  else
-    fn = hs.task.new("echo "..paste, function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {"|", "/usr/local/bin/fb"})
-    hs.alert.show("Text pasted")
-  end
-  fn:start()
-  prefix:exit()
-end
+-- local function paste()
+--   paste = hs.pasteboard.getContents()
+--   if not url and not paste then
+--     pp = hs.task.new("/usr/local/bin/pngpaste", nil, {home .. "/.paste.png"})
+--     pp:start()
+--     fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {home.."/.paste.png"})
+--     hs.alert.show("Image uploaded")
+--   elseif url then
+--     fn = hs.task.new("echo "..url, function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {"|", "/usr/local/bin/fb"})
+--     fn:setInput(url)
+--     hs.alert.show("URL shortened")
+--   else
+--     fn = hs.task.new("echo "..paste, function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {"|", "/usr/local/bin/fb"})
+--     hs.alert.show("Text pasted")
+--   end
+--   fn:start()
+--   prefix:exit()
+-- end
 
 local function launchFocusOrSwitchBack(bundleid)
     -- This function will launch appName if it's not running, focus
@@ -89,7 +89,7 @@ prefix:bind('', 'P', function() launchFocusOrSwitchBack("com.apple.Preview") end
 
 prefix:bind('', 'escape', function() prefix:exit() end)
 prefix:bind('cmd', 'L', function() hs.caffeinate.systemSleep() prefix:exit() end)
-prefix:bind('cmd', 'P', paste)
+-- prefix:bind('cmd', 'P', paste)
 prefix:bind('cmd', 'C', function() hs.pasteboard.clearContents() hs.alert.show("Clipboard Cleared") prefix:exit() end)
 
 -- Information Binds
