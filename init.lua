@@ -41,7 +41,7 @@ local function paste()
     fn:setInput(url)
     hs.alert.show("URL shortened")
   else
-    fn = hs.task.new("echo "..paste.." |  /usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end)
+    fn = hs.task.new("echo "..paste, function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {"|", "/usr/local/bin/fb"})
     hs.alert.show("Text pasted")
   end
   fn:start()
