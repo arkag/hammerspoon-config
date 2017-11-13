@@ -86,6 +86,8 @@ prefix:bind('', 'M', function() launchFocusOrSwitchBack("com.googlecode.iterm2")
 prefix:bind('', ',', function() launchFocusOrSwitchBack("com.hnc.Discord") end)
 prefix:bind('', 'F', function() launchFocusOrSwitchBack("com.apple.finder") end)
 prefix:bind('', 'P', function() launchFocusOrSwitchBack("com.apple.Preview") end)
+prefix:bind('', 'V', function() launchFocusOrSwitchBack("com.vmware.fusion") end)
+
 
 prefix:bind('', 'escape', function() prefix:exit() end)
 prefix:bind('cmd', 'L', function() hs.caffeinate.systemSleep() prefix:exit() end)
