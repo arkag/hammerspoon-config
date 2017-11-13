@@ -37,7 +37,7 @@ local function paste()
     fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {home.."/.paste.png"})
     hs.alert.show("Image uploaded")
   elseif url then
-    fn = hs.task.new("echo "..url.." |  /usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end)
+    fn = hs.task.new("echo "..url, function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {"|", "/usr/local/bin/fb"})
     fn:setInput(url)
     hs.alert.show("URL shortened")
   else
