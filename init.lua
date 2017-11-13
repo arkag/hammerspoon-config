@@ -34,7 +34,7 @@ local function paste()
   if not url and not paste then
     pp = hs.task.new("/usr/local/bin/pngpaste", nil, {home .. "/.paste.png"})
     pp:start()
-    fn = hs.task.new("/usr/local/bin/fb < "..home.."/.paste.png | /usr/bin/pbcopy")
+    fn = hs.task.new("/usr/local/bin/fb < "..home.."/.paste.png | /usr/bin/pbcopy", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end)
     hs.alert.show("Image uploaded")
   elseif url then
     fn = hs.task.new("echo "..url.." |  /usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end)
