@@ -34,13 +34,13 @@ local function paste()
   if not url and not paste then
     pp = hs.task.new("/usr/local/bin/pngpaste", nil, {home .. "/.paste.png"})
     pp:start()
-    fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {home.."/.paste.png"}) hs.alert.show("Image uploaded")
+    fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {home.."/.paste.png"}) hs.alert.show("Image uploaded")
   elseif url then
-    fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {url})
+    fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {url})
     fn:setInput(url)
     hs.alert.show("URL shortened")
   else
-    fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut:match("url: ([^\n]+)")) end, {paste})
+    fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {paste})
     hs.alert.show("Text pasted")
   end
   fn:start()
@@ -72,10 +72,6 @@ local function applicationWatcher(appName, eventType, appObject)
     if (appName == "Finder") then
       -- Bring all Finder windows forward when one gets activated
       appObject:selectMenuItem({"Window", "Bring All to Front"})
-    end
-  elseif (eventType == hs.application.watcher.deactivated) then
-    if (appName == "LastPass") then
-      appObject:hide()
     end
   end
 end
