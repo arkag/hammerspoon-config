@@ -58,9 +58,14 @@ local function applicationWatcher(appName, eventType, appObject)
   end
 end
 
-prefix:bind('', 'B', function() launchFocusOrSwitchBack("org.mozilla.nightly") end)
+-- Work Application Binds
 prefix:bind('', 'W', function() launchFocusOrSwitchBack("com.vivaldi.Vivaldi") end)
 prefix:bind('', 'R', function() launchFocusOrSwitchBack("com.microsoft.rdc.macos") end)
+prefix:bind('', 'T', function() launchFocusOrSwitchBack("com.microsoft.teams") end)
+prefix:bind('', 'O', function() launchFocusOrSwitchBack("com.microsoft.Outlook") end)
+
+-- General Application Binds
+prefix:bind('', 'B', function() launchFocusOrSwitchBack("org.mozilla.nightly") end)
 prefix:bind('', 'Z', function() launchFocusOrSwitchBack("com.tidal.desktop") end)
 prefix:bind('', 'X', function() launchFocusOrSwitchBack("com.googlecode.iterm2") end)
 prefix:bind('', 'C', function() launchFocusOrSwitchBack("com.tdesktop.Telegram") end)
@@ -71,12 +76,12 @@ prefix:bind('', 'F', function() launchFocusOrSwitchBack("com.apple.finder") end)
 prefix:bind('', 'P', function() launchFocusOrSwitchBack("com.apple.Preview") end)
 prefix:bind('', 'V', function() launchFocusOrSwitchBack("com.vmware.fusion") end)
 
+-- System Binds
 prefix:bind('', 'escape', function() prefix:exit() end)
 prefix:bind('cmd', 'L', function() hs.caffeinate.systemSleep() prefix:exit() end)
 prefix:bind('cmd', 'C', function() hs.pasteboard.clearContents() hs.alert.show("Clipboard Cleared") prefix:exit() end)
 
 -- Information Binds
-
 prefix:bind('cmd', 'B', function() hs.pasteboard.setContents(hs.application.frontmostApplication():bundleID()) hs.alert.show("BundleID Copied") prefix:exit() end)
 prefix:bind('cmd', 'D', function() hs.pasteboard.setContents(hs.application.frontmostApplication():title()) hs.alert.show("Title Copied") prefix:exit() end)
 
