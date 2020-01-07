@@ -29,25 +29,6 @@ function autoCommit(src, dest)
   hs.task.new("/usr/local/bin/autocommit", acNotify(exitCode, stdOut, stdErr, src), {home..src, home..dest}):start()
 end
 
--- local function paste()
---   paste = hs.pasteboard.getContents()
---   if not url and not paste then
---     pp = hs.task.new("/usr/local/bin/pngpaste", nil, {home .. "/.paste.png"})
---     pp:start()
---     fn = hs.task.new("/usr/local/bin/fb", function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {home.."/.paste.png"})
---     hs.alert.show("Image uploaded")
---   elseif url then
---     fn = hs.task.new("echo "..url, function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {"|", "/usr/local/bin/fb"})
---     fn:setInput(url)
---     hs.alert.show("URL shortened")
---   else
---     fn = hs.task.new("echo "..paste, function(exitCode, stdOut, stdErr) hs.pasteboard.setContents(stdOut) end, {"|", "/usr/local/bin/fb"})
---     hs.alert.show("Text pasted")
---   end
---   fn:start()
---   prefix:exit()
--- end
-
 local function launchFocusOrSwitchBack(bundleid)
     -- This function will launch appName if it's not running, focus
     -- it if it is running, or if it's already focused, switch back
@@ -78,20 +59,20 @@ local function applicationWatcher(appName, eventType, appObject)
 end
 
 prefix:bind('', 'B', function() launchFocusOrSwitchBack("org.mozilla.nightly") end)
-prefix:bind('', 'Z', function() launchFocusOrSwitchBack("google-play-music-desktop-player") end)
+prefix:bind('', 'W', function() launchFocusOrSwitchBack("com.vivaldi.Vivaldi") end)
+prefix:bind('', 'R', function() launchFocusOrSwitchBack("com.microsoft.rdc.macos") end)
+prefix:bind('', 'Z', function() launchFocusOrSwitchBack("com.tidal.desktop") end)
 prefix:bind('', 'X', function() launchFocusOrSwitchBack("com.googlecode.iterm2") end)
 prefix:bind('', 'C', function() launchFocusOrSwitchBack("com.tdesktop.Telegram") end)
 prefix:bind('', 'N', function() launchFocusOrSwitchBack("com.github.atom") end)
 prefix:bind('', 'M', function() launchFocusOrSwitchBack("com.googlecode.iterm2") keyStroke('cmd', '1', "com.googlecode.iterm2") end)
-prefix:bind('', ',', function() launchFocusOrSwitchBack("com.hnc.Discord") end)
+prefix:bind('', ',', function() launchFocusOrSwitchBack("com.hnc.DiscordPTB") end)
 prefix:bind('', 'F', function() launchFocusOrSwitchBack("com.apple.finder") end)
 prefix:bind('', 'P', function() launchFocusOrSwitchBack("com.apple.Preview") end)
 prefix:bind('', 'V', function() launchFocusOrSwitchBack("com.vmware.fusion") end)
 
-
 prefix:bind('', 'escape', function() prefix:exit() end)
 prefix:bind('cmd', 'L', function() hs.caffeinate.systemSleep() prefix:exit() end)
--- prefix:bind('cmd', 'P', paste)
 prefix:bind('cmd', 'C', function() hs.pasteboard.clearContents() hs.alert.show("Clipboard Cleared") prefix:exit() end)
 
 -- Information Binds
