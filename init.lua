@@ -40,6 +40,8 @@ local function launchFocusOrSwitchBack(bundleid)
         hs.application.launchOrFocusByBundleID(bundleid)
     end
     lastApp = currentApp
+
+    -- Center mouse on Window after focus or switch occurs
     currentWindow = hs.window.focusedWindow()
     currentFrame = currentWindow:frame()
     cfx = currentFrame.x + (currentFrame.w / 2)
