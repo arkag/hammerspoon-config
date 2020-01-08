@@ -40,6 +40,13 @@ local function launchFocusOrSwitchBack(bundleid)
         hs.application.launchOrFocusByBundleID(bundleid)
     end
     lastApp = currentApp
+    currentWindow = hs.window.focusedWindow()
+    currentFrame = currentWindow:frame()
+    cfx = currentFrame.x + (currentFrame.w / 2)
+    cfy = currentFrame.y + (currentFrame.h / 2)
+    cfp = hs.geometry.point(cfx, cfy)
+    hs.mouse.setAbsolutePosition(cfp)
+
     prefix:exit()
 end
 
