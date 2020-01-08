@@ -78,7 +78,8 @@ prefix:bind('', 'V', function() launchFocusOrSwitchBack("com.vmware.fusion") end
 
 -- System Binds
 prefix:bind('', 'escape', function() prefix:exit() end)
-prefix:bind('cmd', 'L', function() hs.caffeinate.systemSleep() prefix:exit() end)
+prefix:bind('cmd', 'L', function() hs.caffeinate.lockScreen() prefix:exit() end)
+prefix:bind('cmd', 'S', function() hs.caffeinate.systemSleep() prefix:exit() end)
 prefix:bind('cmd', 'C', function() hs.pasteboard.clearContents() hs.alert.show("Clipboard Cleared") prefix:exit() end)
 
 -- Information Binds
