@@ -35,7 +35,7 @@ local function launchFocusOrSwitchBack(bundleid)
     -- to whatever the last focused App was
     currentApp = hs.application.frontmostApplication()
     if lastApp and currentApp and (currentApp:bundleID() == bundleid) then
-        lastApp:activate()
+        lastApp:activate(true)
     else
         hs.application.launchOrFocusByBundleID(bundleid)
     end
