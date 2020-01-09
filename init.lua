@@ -78,7 +78,7 @@ prefix:bind('', 'B', function() launchFocusOrSwitchBack("org.mozilla.nightly") e
 prefix:bind('', 'Z', function() launchFocusOrSwitchBack("com.tidal.desktop") end)
 prefix:bind('', 'X', function() launchFocusOrSwitchBack("com.googlecode.iterm2") end)
 prefix:bind('', 'C', function() launchFocusOrSwitchBack("com.tdesktop.Telegram") end)
-prefix:bind('', 'N', function() launchFocusOrSwitchBack("com.sublimetext.3") end)
+prefix:bind('', 'N', function() launchFocusOrSwitchBack("com.microsoft.VSCode") end)
 prefix:bind('', 'M', function() launchFocusOrSwitchBack("com.googlecode.iterm2") keyStroke('cmd', '1', "com.googlecode.iterm2") end)
 prefix:bind('', ',', function() launchFocusOrSwitchBack("com.hnc.DiscordPTB") end)
 prefix:bind('', 'F', function() launchFocusOrSwitchBack("com.apple.finder") end)
