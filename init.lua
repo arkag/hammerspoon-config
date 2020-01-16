@@ -84,6 +84,7 @@ prefix:bind('', ',', function() launchFocusOrSwitchBack("com.hnc.DiscordPTB") en
 prefix:bind('', 'F', function() launchFocusOrSwitchBack("com.apple.finder") end)
 prefix:bind('', 'P', function() launchFocusOrSwitchBack("com.apple.Preview") end)
 prefix:bind('', 'V', function() launchFocusOrSwitchBack("com.vmware.fusion") end)
+prefix:bind('', 'I', function() launchFocusOrSwitchBack("com.TickTick.task.mac") end)
 
 -- System Binds
 prefix:bind('', 'escape', function() prefix:exit() end)
