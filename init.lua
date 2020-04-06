@@ -68,7 +68,8 @@ local function applicationWatcher(appName, eventType, appObject)
 end
 
 -- Work Application Binds
-prefix:bind('', 'W', function() launchFocusOrSwitchBack("com.vivaldi.Vivaldi") end)
+prefix:bind('', 'W', function() launchFocusOrSwitchBack("com.brave.Browser") end)
+-- prefix:bind('', 'W', function() launchFocusOrSwitchBack("com.vivaldi.Vivaldi") end)
 prefix:bind('', 'R', function() launchFocusOrSwitchBack("com.microsoft.rdc.macos") end)
 prefix:bind('', 'T', function() launchFocusOrSwitchBack("com.microsoft.teams") end)
 prefix:bind('', 'O', function() launchFocusOrSwitchBack("com.microsoft.Outlook") end)
